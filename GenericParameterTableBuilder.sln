@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2A4362B5-87C9-4281-87D5-BBB4FE8187F6}"
+	ProjectSection(SolutionItems) = preProject
+		GenericParameterTableBuilder.cs = GenericParameterTableBuilder.cs
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericParameterTableBuilderTests", "GenericParameterTableBuilderTests\GenericParameterTableBuilderTests.csproj", "{60576154-F2F5-4219-8FE7-E06C73EDC50B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericTableBuilder", "GenericTableBuilder\GenericTableBuilder.csproj", "{6C8DDD74-F1A9-4924-B2DA-E45ABC310E92}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{60576154-F2F5-4219-8FE7-E06C73EDC50B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60576154-F2F5-4219-8FE7-E06C73EDC50B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60576154-F2F5-4219-8FE7-E06C73EDC50B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60576154-F2F5-4219-8FE7-E06C73EDC50B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C8DDD74-F1A9-4924-B2DA-E45ABC310E92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C8DDD74-F1A9-4924-B2DA-E45ABC310E92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C8DDD74-F1A9-4924-B2DA-E45ABC310E92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C8DDD74-F1A9-4924-B2DA-E45ABC310E92}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {111802C4-CB51-43A9-A79A-2576AF26B2CD}
+	EndGlobalSection
+EndGlobal

@@ -1,11 +1,14 @@
-﻿using System;
+using NUnit.Framework.Internal;
 using System.Text;
-using GenericParameterTableBuilder.GenericParameterTableBuilder
+using GenericParameterTableBuilder;
 
-public class GenericParameterTableBuilderTests
+namespace GenericParameterTableBuilder
 {
-	[Fact]
-	public SingleColumnTableBuildsWhenTypeIsBool()
+    [TestClass]
+    public class GenericParameterTableBuilderTests
+    {
+        [TestMethod]
+        public void SingleColumnTableBuildsWhenTypeIsBool()
 	{
 		List<bool> values = new List<bool>();
 		StringBuilder goal = new StringBuilder();
@@ -21,14 +24,15 @@ public class GenericParameterTableBuilderTests
 
 		foreach(var value in values)
 		{
-			goalString.Append($$"({value}),");
+			goal.Append(@"({value}),");
 		}
 
-		string.Remove(goal.Length - 1, 1);
-		string.Append(";");
+		goal.Remove(goal.Length - 1, 1);
+		goal.Append(";");
 
 		var test = BuildGenericParameterTable("Name", "Column", values);
 
-		Assert.Equal(goal.ToString(), test);
+		Assert.Equals(goal.ToString(), test);
+    }
     }
 }

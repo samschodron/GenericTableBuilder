@@ -14,7 +14,7 @@ public class GenericParameterTableBuilder
 	{
 		var testType = values.First();
         string type = "";
-        int counter = values.Count() - 1; ;
+        int counter = values.Count() - 1;
         StringBuilder sqlString = new StringBuilder();
 
 		// Testing data type and setting type to corresponding SQL variable type.
@@ -75,7 +75,7 @@ public class GenericParameterTableBuilder
 	 * and creates a SQL statement with the value type that corresponds 
 	 * to the data type of the generic parameter.
 	 */
-    public static string BuildGenericParameterTable<T>(string name, string columnOne, string ColumnTwo, IEnumerable<T> valuesOne, IEnumerable<T> valuesTwo)
+    public static string BuildGenericParameterTable<T>(string name, string columnOne, string columnTwo, IEnumerable<T> valuesOne, IEnumerable<T> valuesTwo)
 	{
         var testTypeOne = valuesOne.First();
         var testTypeTwo = valuesTwo.First();
@@ -133,6 +133,7 @@ public class GenericParameterTableBuilder
         else if (testTypeTwo is string)
         {
             var columnMax = values.Cast<string>().Aggregate((max, cur) => max.Length > cur.Length ? max : cur);
+            typeOne = $"VARCHAR({columnMax.Length})";
 
         }
         else
@@ -141,15 +142,88 @@ public class GenericParameterTableBuilder
             throw new ArgumentException($"Variable type is not currently supported: {testType}")
         }
 
-        sqlString.Append($"DECLARE @@{name} TABLE({columnOne} {typeOne}, {ColumnTwo} {typeTwo}));");
+        if(typeOne = string || typeTwo = string)
+        {
+            if (typeOne = string && !(typeTwo = string)) 
+            {
+                DoubleColumnWhereColumnOneString(name, columnOne, columnTwo, typeOne, typeTwo, valuesOne, valuesTwo);
+            }
+            else if (!(typeOne = string) && typeTwo = string)
+            {
+                DoubleColumnWhereColumnTwoString(name, columnOne, columnTwo, typeOne, typeTwo, valuesOne, valuesTwo);
+            }
+            else if (typeOne = string && typeTwo = string)
+            {
+                DoubleColumnWhereColumnOneTwoString(name, columnOne, columnTwo, typeOne, typeTwo, valuesOne, valuesTwo);
+            }
+        }
 
-        foreach (var valuez in columnOne.Zip(ColumnTwo, (a, b) => new { a, b }))
+        sqlString.Append($"DECLARE @@{name} TABLE({columnOne} {typeOne}, {columnTwo} {typeTwo}));");
+
+        foreach (var valuez in columnOne.Zip(columnTwo, (a, b) => new { a, b }))
         {
             if (counter == valuesOne.Count() - 1 || counter % 1000 == 999)
             {
                 sqlString.Append($"INSERT INTO @@{name} ({columnOne}, {ColumnTwo}) VALUES ");
             }
             sqlString.Append($"({valuez.a}, {valuez.b}){(counter % 1000 == 0 ? ";" : ",")}");
+            counter--;
+        }
+
+        return sqlString;
+    }
+
+    private static string DoubleColumnWhereColumnOneString<T>(string name, string columnOne, string columnTwo, string typeOne, string typeTwo IEnumerable<T> valuesOne, IEnumerable<T> valuesTwo)
+    {
+        int counter = columnOneValues.Count() - 1;
+
+        sqlString.Append($"DECLARE @@{name} TABLE({columnOne} {typeOne}, {columnTwo} {typeTwo}));");
+
+        foreach (var valuez in columnOne.Zip(columnTwo, (a, b) => new { a, b }))
+        {
+            if (counter == valuesOne.Count() - 1 || counter % 1000 == 999)
+            {
+                sqlString.Append($"INSERT INTO @@{name} ({columnOne}, {columnTwo}) VALUES ");
+            }
+            sqlString.Append($"('{valuez.a}', {valuez.b}){(counter % 1000 == 0 ? ";" : ",")}");
+            counter--;
+        }
+
+        return sqlString;
+    }
+
+    private static string DoubleColumnWhereColumnTwoString<T>(string name, string columnOne, string columnTwo, string typeOne, string typeTwo IEnumerable<T> valuesOne, IEnumerable<T> valuesTwo)
+    {
+        int counter = columnOneValues.Count() - 1;
+
+        sqlString.Append($"DECLARE @@{name} TABLE({columnOne} {typeOne}, {columnTwo} {typeTwo}));");
+
+        foreach (var valuez in columnOne.Zip(columnTwo, (a, b) => new { a, b }))
+        {
+            if (counter == valuesOne.Count() - 1 || counter % 1000 == 999)
+            {
+                sqlString.Append($"INSERT INTO @@{name} ({columnOne}, {columnTwo}) VALUES ");
+            }
+            sqlString.Append($"({valuez.a}, '{valuez.b}'){(counter % 1000 == 0 ? ";" : ",")}");
+            counter--;
+        }
+
+        return sqlString;
+    }
+
+    private static string DoubleColumnWhereColumnOneTwoString<T>(string name, string columnOne, string columnTwo, string typeOne, string typeTwo IEnumerable<T> valuesOne, IEnumerable<T> valuesTwo)
+    {
+        int counter = columnOneValues.Count() - 1;
+
+        sqlString.Append($"DECLARE @@{name} TABLE({columnOne} {typeOne}, {columnTwo} {typeTwo}));");
+
+        foreach (var valuez in columnOne.Zip(columnTwo, (a, b) => new { a, b }))
+        {
+            if (counter == valuesOne.Count() - 1 || counter % 1000 == 999)
+            {
+                sqlString.Append($"INSERT INTO @@{name} ({columnOne}, {columnTwo}) VALUES ");
+            }
+            sqlString.Append($"('{valuez.a}', '{valuez.b}'){(counter % 1000 == 0 ? ";" : ",")}");
             counter--;
         }
 
