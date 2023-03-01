@@ -5,7 +5,8 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2A4362B5-87C9-4281-87D5-BBB4FE8187F6}"
 	ProjectSection(SolutionItems) = preProject
-		GenericTableBuilder.cs = GenericTableBuilder.cs
+		GenericParameterTableBuilderTest.cs = GenericParameterTableBuilderTest.cs
+		GenericParameterTableBuilder.cs = GenericParameterTableBuilder.cs
 	EndProjectSection
 EndProject
 Global

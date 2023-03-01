@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class GenericTableBuilder
+public class GenericParameterTableBuilder
 {
 	/* Builds a single column table using generic parameters passed in.
 	 * Tests each parameter to figue out which primitive data type it is
 	 * and creates a SQL statement with the value type that corresponds 
 	 * to the data type of the generic parameter.
 	 */
-	public static string BuildTable<T>(string name, string column, IEnumerable<T> values)
+	public static string BuildGenericParameterTable<T>(string name, string column, IEnumerable<T> values)
 	{
 		var testType = values.First();
         string type = "";
@@ -41,7 +41,7 @@ public class GenericTableBuilder
 			sqlString.Append($"DECLARE @@{name} TABLE({column} VARCHAR({columnMax.Length}));");\
 			foreach(var value in values)
 			{
-				if(counter == columnValues.Count() -1 || counter % 1000 == 999)
+				if(counter == values.Count() -1 || counter % 1000 == 999)
 				{
 					sqlString.Append($"INSERT INTO @@{name} {column} VALUES ");
 				}
@@ -75,7 +75,7 @@ public class GenericTableBuilder
 	 * and creates a SQL statement with the value type that corresponds 
 	 * to the data type of the generic parameter.
 	 */
-    public static string BuildTable<T>(string name, string columnOne, string ColumnTwo, IEnumerable<T> valuesOne, IEnumerable<T> valuesTwo)
+    public static string BuildGenericParameterTable<T>(string name, string columnOne, string ColumnTwo, IEnumerable<T> valuesOne, IEnumerable<T> valuesTwo)
 	{
         var testTypeOne = valuesOne.First();
         var testTypeTwo = valuesTwo.First();
@@ -139,7 +139,20 @@ public class GenericTableBuilder
         {
             // Throwing exception when variable type is not of an expected type.
             throw new ArgumentException($"Variable type is not currently supported: {testType}")
-
         }
+
+        sqlString.Append($"DECLARE @@{name} TABLE({columnOne} {typeOne}, {ColumnTwo} {typeTwo}));");
+
+        foreach (var valuez in columnOne.Zip(ColumnTwo, (a, b) => new { a, b }))
+        {
+            if (counter == valuesOne.Count() - 1 || counter % 1000 == 999)
+            {
+                sqlString.Append($"INSERT INTO @@{name} ({columnOne}, {ColumnTwo}) VALUES ");
+            }
+            sqlString.Append($"({valuez.a}, {valuez.b}){(counter % 1000 == 0 ? ";" : ",")}");
+            counter--;
+        }
+
+        return sqlString;
     }
 }
