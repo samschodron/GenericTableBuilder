@@ -43,7 +43,7 @@ public class GenericParameterTableBuilder
 			{
 				if(counter == values.Count() -1 || counter % 1000 == 999)
 				{
-					sqlString.Append($"INSERT INTO @@{name} {column} VALUES ");
+					sqlString.Append($"INSERT INTO @@{name} ({column}) VALUES ");
 				}
                 sqlString.Append($"('{value}'){(counter % 1000 == 0 ? ";" : ",")}");
 				counter--;
@@ -61,7 +61,7 @@ public class GenericParameterTableBuilder
         {
             if (counter == columnValues.Count() - 1 || counter % 1000 == 999)
             {
-                sqlString.Append($"INSERT INTO @@{name} {column} VALUES ");
+                sqlString.Append($"INSERT INTO @@{name} ({column}) VALUES ");
             }
             sqlString.Append($"({value}){(counter % 1000 == 0 ? ";" : ",")}");
             counter--;
