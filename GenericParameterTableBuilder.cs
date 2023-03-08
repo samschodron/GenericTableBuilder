@@ -5,6 +5,7 @@ using System.Text;
 
 public class GenericParameterTableBuilder
 {
+	// For all this code you may want to use case statements since they are slightly faster than else if statements - Colton
 	/* Builds a single column table using generic parameters passed in.
 	 * Tests each parameter to figue out which primitive data type it is
 	 * and creates a SQL statement with the value type that corresponds 
@@ -172,7 +173,7 @@ public class GenericParameterTableBuilder
 
         return sqlString;
     }
-
+	// probably should leave a comment here to explain this - Colton
     private static string DoubleColumnWhereColumnOneString<T>(string name, string columnOne, string columnTwo, string typeOne, string typeTwo IEnumerable<T> valuesOne, IEnumerable<T> valuesTwo)
     {
         int counter = columnOneValues.Count() - 1;
@@ -191,7 +192,7 @@ public class GenericParameterTableBuilder
 
         return sqlString;
     }
-
+	// explain exactly what this is doing - Colton
     private static string DoubleColumnWhereColumnTwoString<T>(string name, string columnOne, string columnTwo, string typeOne, string typeTwo IEnumerable<T> valuesOne, IEnumerable<T> valuesTwo)
     {
         int counter = columnOneValues.Count() - 1;
